@@ -1,0 +1,15 @@
+- name: deploy selenium hub
+  docker_container:
+    docker_host: tcp://localhost:4000
+    name: selenium-hub
+    image: selenium/hub:2.53.1
+    ports:
+      - "4444:4444"
+
+- name: deploy selenium chrome node
+  docker_container:
+    docker_host: tcp://localhost:4000
+    name: selenium-node-chrome
+    image: selenium/node-chrome:2.53.1
+    links:
+      - selenium-hub:hub

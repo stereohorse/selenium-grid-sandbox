@@ -1,0 +1,40 @@
+- name: add yum repo
+  yum_repository: 
+    name: docker
+    description: docker repository
+    baseurl: https://yum.dockerproject.org/repo/main/centos/7/
+    gpgcheck: yes
+    gpgkey: https://yum.dockerproject.org/gpg
+
+- name: install EPEL
+  yum: name=http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
+
+- name: update packages
+  yum: name=* state=latest
+
+- name: install docker-engine
+  yum: name=docker-engine
+
+- name: create docker user group
+  group: name=docker
+
+- name: add user to docker group
+  user: name="{{ ssh_user }}" groups=docker append=yes
+
+- name: install pip
+  yum: name=python-pip
+
+- name: install docker-py
+  pip: name=docker-py version=1.9.0
+
+- name: create docker config dir
+  file: path=/etc/systemd/system/docker.service.d state=directory
+
+- name: copy docker config
+  copy: src=docker.conf dest=/etc/systemd/system/docker.service.d/docker.conf
+
+- name: reload systemd
+  command: systemctl daemon-reload
+
+- name: restart docker
+  service: name=docker state=restarted enabled=yes

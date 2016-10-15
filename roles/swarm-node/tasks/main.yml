@@ -1,0 +1,5 @@
+- name: start swarm node
+  docker_container:
+    name: swarm-node
+    image: swarm
+    command: "join --advertise={{ ansible_eth1.ipv4.address }}:2375 consul://{{ consul_addr }}"

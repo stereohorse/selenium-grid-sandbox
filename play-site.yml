@@ -1,0 +1,22 @@
+- hosts: docker
+  become: yes
+  roles:
+    - docker
+
+- hosts: masters
+  become: yes
+  roles:
+    - consul
+    - swarm-manager
+
+- hosts: slaves
+  become: yes
+  roles:
+    - swarm-node
+
+- hosts: masters[0]
+  become: yes
+  roles:
+    - selenium-grid
+  tags:
+    - selenium-grid

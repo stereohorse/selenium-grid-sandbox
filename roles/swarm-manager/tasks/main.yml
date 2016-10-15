@@ -1,0 +1,7 @@
+- name: start swarm manager
+  docker_container:
+    name: swarm-manager
+    image: swarm
+    ports:
+      - "4000:4000"
+    command: "manage -H :4000 --advertise {{ ansible_eth1.ipv4.address }}:4000 consul://{{ consul_addr }}"
