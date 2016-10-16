@@ -1,0 +1,11 @@
+version: 2
+services:
+  hub:
+    image: selenium/hub:2.53.1
+    ports:
+      - "4444:4444"
+
+  chrome-node:
+    image: selenium/node-chrome:2.53.1
+    links:
+      - hub:hub

@@ -1,0 +1,7 @@
+- name: delete cluster
+  command: docker -H {{ docker.host }} rm -f {{ item }}
+  ignore_errors: yes
+  with_items:
+    - selenium-node-chrome
+    - selenium-node-firefox
+    - selenium-hub

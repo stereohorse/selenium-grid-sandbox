@@ -2,6 +2,8 @@
   become: yes
   roles:
     - docker
+  tags:
+    - docker
 
 - hosts: masters
   become: yes

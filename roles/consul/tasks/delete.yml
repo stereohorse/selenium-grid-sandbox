@@ -1,0 +1,3 @@
+- name: delete consul
+  command: docker rm -f consul
+  ignore_errors: yes

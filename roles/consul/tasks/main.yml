@@ -1,10 +1,2 @@
-- name: start consul
-  docker_container:
-    name: consul
-    image: progrium/consul
-    command: -server -bootstrap
-    ports:
-      - "8500:8500"
-
-- name: wait until consul is ready
-  wait_for: port=8500 timeout=30 delay=5
+- include: delete.yml
+- include: start.yml

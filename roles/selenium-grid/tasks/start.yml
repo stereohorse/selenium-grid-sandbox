@@ -1,0 +1,26 @@
+- name: deploy selenium hub
+  docker_container:
+    docker_host: "{{ docker.host }}"
+    name: selenium-hub
+    image: "selenium/hub:{{ selenium.version }}"
+    memory: 512MB
+    ports:
+      - "4444:4444"
+
+- name: deploy selenium chrome node
+  docker_container:
+    docker_host: "{{ docker.host }}"
+    name: selenium-node-chrome
+    image: "selenium/node-chrome:{{ selenium.version }}"
+    memory: "{{ selenium.node.memory_mb }}MB"
+    links:
+      - selenium-hub:hub
+
+- name: deploy selenium firefox node
+  docker_container:
+    docker_host: "{{ docker.host }}"
+    name: selenium-node-firefox
+    image: "selenium/node-firefox:{{ selenium.version }}"
+    memory: "{{ selenium.node.memory_mb }}MB"
+    links:
+      - selenium-hub:hub
